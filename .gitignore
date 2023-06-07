@@ -1,0 +1,20 @@
+.env*
+.env.json
+
+# file system
+yarn-error.log
+*.log
+.DS_Store
+
+# backends
+__pycache__
+.pytest_cache
+
+# frontends
+node_modules
+dist
+
+# tmp storage/things to remove
+tmp
+log
+logs
