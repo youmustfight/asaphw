@@ -4,7 +4,7 @@ from sanic.response import json
 from sanic import Blueprint
 import sqlalchemy as sa
 
-from dbs.redis_manager import redis_client
+from dbs.database_redis import redis_client
 from member_id.member_id_models import MemberID
 from member_id.member_id_utils import is_member_id_valid, member_id_clean, member_id_generate
 from utils.to_date import to_date
@@ -15,19 +15,19 @@ blueprint_member_id = Blueprint("blueprint_member_id")
 
 
 # ROUTES
-"""
-Endpoint: /v1/member_ids
-Description: Gets all member ids models
-Method: GET
-Example Response: {
-    "status": "success"
-    "data": {
-        "member_ids": [...]
-    }
-}
-"""
 @blueprint_member_id.route('/v1/member_ids', methods = ['GET'])
 async def app_route_member_id_get(request):
+    """
+    Endpoint: /v1/member_ids
+    Description: Gets all member ids models
+    Method: GET
+    Example Response: {
+        "status": "success"
+        "data": {
+            "member_ids": [...]
+        }
+    }
+    """
     session = request.ctx.session
     async with session.begin():
         query_builder = sa.select(MemberID).order_by(sa.desc(MemberID.id))
@@ -39,22 +39,22 @@ async def app_route_member_id_get(request):
     })
 
 
-"""
-Endpoint: /v1/member_id
-Description: Creates a new member id model
-Method: POST
-Example Request Body: {
-    "first_name": "Jose",
-    "last_name": "Vasconcelos",
-    "dob": "01/01/1961",
-    "country": "MX"
-}
-Example Response: {
-    "status": "success"
-}
-"""
 @blueprint_member_id.route('/v1/member_id', methods = ['POST'])
 async def app_route_member_id_post(request):
+    """
+    Endpoint: /v1/member_id
+    Description: Creates a new member id model
+    Method: POST
+    Example Request Body: {
+        "first_name": "Jose",
+        "last_name": "Vasconcelos",
+        "dob": "01/01/1961",
+        "country": "MX"
+    }
+    Example Response: {
+        "status": "success"
+    }
+    """
     # VALIDATE
     if request.json.get('country') == None:
         raise ValueError("'country' is required")
@@ -76,24 +76,24 @@ async def app_route_member_id_post(request):
         return json({ 'status': 'success' })
         
 
-"""
-Endpoint: /v1/member_id/validate
-Description: Validates a member id (and also shows if it exist's been registered by someone)
-Method: POST
-Example Request Body: {
-    "member_id": "XYZ123"
-}
-Example Response: {
-    "status": "success"
-    "data": {
-        "is_registered": true,
-        "is_valid": true,
-        "invalid_reason": "...",
-    }
-}
-"""
 @blueprint_member_id.route('/v1/member_id/validate', methods = ['POST'])
 async def app_route_member_id__validate_post(request):
+    """
+    Endpoint: /v1/member_id/validate
+    Description: Validates a member id (and also shows if it exist's been registered by someone)
+    Method: POST
+    Example Request Body: {
+        "member_id": "XYZ123"
+    }
+    Example Response: {
+        "status": "success"
+        "data": {
+            "is_registered": true,
+            "is_valid": true,
+            "invalid_reason": "...",
+        }
+    }
+    """
     # VALIDATE/CLEAN
     if request.json.get('member_id') == None:
         raise ValueError("'member_id' is required")
