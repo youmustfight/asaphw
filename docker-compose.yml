@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: ./api
+    volumes:
+      - ./api/src:/usr/src/api/src
+      - ./api/requirements.txt:/usr/src/api/requirements.txt
+    ports:
+      - "3000:3000"
+    depends_on:
+      - cache
+    env_file:
+      - ./.env
+    environment:
+      - TARGET_ENV=asap/local
+
+  cache:
+    image: redis:6.2.7
+    ports:
+      - "6379:6379"
+
+  www:
+    build:
+      context: ./www
+    volumes:
+      - ./www/src:/usr/src/www/src
+      - ./www/index.html:/usr/src/www/index.html
+      - ./www/package.json:/usr/src/www/package.json
+      - ./www/tsconfig.json:/usr/src/www/tsconfig.json
+      - ./www/tsconfig.node.json:/usr/src/www/tsconfig.node.json
+      - ./www/vite.config.json:/usr/src/www/vite.config.json
+      - ./www/yarn.lock:/usr/src/www/yarn.lock
+      - /usr/src/www/node_modules
+    ports:
+      - "7000:7000"
+    command: "npm run start"
+    env_file:
+      - ./.env
+    environment:
+      # HACK: find a way to autopull vars in setup
+      - TARGET_ENV=asap/local
+      - VITE_TARGET_ENV=asap/local
+      - VITE_GIDEON_API_URL=http://localhost:3000
