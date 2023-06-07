@@ -17,6 +17,18 @@ def member_id_clean(member_id: str):
 # - i don't want to reference first/last names, incase they need to change their name
 
 def member_id_generate(year: int, country_code: str, birth_date: date):
+    # VALIDATE
+    # --- year
+    if year > date.today().year:
+        raise ValueError('Year cannot be in the future')
+    # --- country
+    if country_code not in country_codes_and_names.keys():
+        raise ValueError('Not a valid country code')
+    # --- birth_date
+    if birth_date.year > date.today().year:
+        raise ValueError('Birth year cannot be in the future')
+
+    # GENERATE
     id_parts = [
         str(year)[-2:],
         country_code, # TODO: should we actually have country? Or is it better to hide identifying factors

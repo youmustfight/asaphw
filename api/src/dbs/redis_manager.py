@@ -2,7 +2,7 @@ import redis
 import env
 
 # TODO: check if connection open/close is problematic
-rc = redis.Redis(
+redis_client = redis.Redis(
     host=env.env_get_service_cache_host(),
     port=env.env_get_service_cache_port(),
     db=0,
