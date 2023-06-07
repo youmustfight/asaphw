@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
-import { Widget } from "./Widget";
+import { Widget } from "./components/Widget";
 
 const App: React.FC = () => {
   return (

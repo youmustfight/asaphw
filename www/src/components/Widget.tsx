@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { countryCodes } from './data/countryCodes';
-import { TMemberID, fetchMemberIds, generateMemberId, setupSQLiteDatabaseTables, validateMemberId } from './data/requests';
+import { countryCodes } from '../data/countryCodes';
+import { TMemberID, fetchMemberIds, generateMemberId, setupSQLiteDatabaseTables, validateMemberId } from '../data/requests';
 
 enum WidgetMode {
   GENERATE = 'generate',
