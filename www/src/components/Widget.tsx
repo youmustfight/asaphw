@@ -61,8 +61,8 @@ export const Widget = () => {
       <StyledWidget>
         {/* SELECT MODE */}
         <div className="form-options">
-          <button className={mode === WidgetMode.VALIDATE ? 'active' : ''} onClick={() => changeMode(WidgetMode.VALIDATE)}>Validate</button>
-          <button className={mode === WidgetMode.GENERATE ? 'active' : ''} onClick={() => changeMode(WidgetMode.GENERATE)}>Generate</button>
+          <button className={mode === WidgetMode.VALIDATE ? 'active' : ''} onClick={() => changeMode(WidgetMode.VALIDATE)} data-test-id="widget-validate-btn">Validate</button>
+          <button className={mode === WidgetMode.GENERATE ? 'active' : ''} onClick={() => changeMode(WidgetMode.GENERATE)} data-test-id="widget-generate-btn">Generate</button>
         </div>
 
         {/* GENERATE */}
@@ -76,17 +76,17 @@ export const Widget = () => {
               <label>
                 Name
                 <div className="row">
-                  <input type="text" name="firstName" placeholder="First Name" onChange={clearMessages} />
-                  <input type="text" name="lastName" placeholder="Last Name" onChange={clearMessages} />
+                  <input type="text" name="firstName" placeholder="First Name" onChange={clearMessages} data-test-id="member-id-generating-first-name-input" />
+                  <input type="text" name="lastName" placeholder="Last Name" onChange={clearMessages} data-test-id="member-id-generating-last-name-input" />
                   </div>
               </label>
               <label>
                 Date of Birth
-                <input type="date" name="dob" onChange={clearMessages} />
+                <input type="date" name="dob" onChange={clearMessages} data-test-id="member-id-generating-dob-input" />
               </label>
               <label>
                 Country
-                <select name="country" onChange={clearMessages}>
+                <select name="country" onChange={clearMessages} data-test-id="member-id-generating-country-select">
                   <option value="">---</option>
                   {Object.entries(countryCodes).map(([code, name]) => (
                     <option key={code} value={code}>{code} - {name}</option>
@@ -94,8 +94,8 @@ export const Widget = () => {
                 </select>
               </label>
             </div>
-            <button type="submit">Generate Member ID</button>
-            {feedbackMessage && <small>{feedbackMessage}</small>}
+            <button type="submit" data-test-id="member-id-generating-submit">Generate Member ID</button>
+            {feedbackMessage && <small data-test-id="feedback-message-small">{feedbackMessage}</small>}
           </form>
         )}
         
@@ -107,13 +107,13 @@ export const Widget = () => {
             sumbitValidation(e.target.memberId.value);
           }}>
             <div className="inputs">
-              <label>
+              <label data-test-id="member-id-validation-input">
                 Member ID
                 <input type="text" name="memberId" onChange={clearMessages} />
               </label>
             </div>
-            <button type="submit">Validate Member ID</button>
-            {feedbackMessage && <small>{feedbackMessage}</small>}
+            <button type="submit" data-test-id="member-id-validation-submit">Validate Member ID</button>
+            {feedbackMessage && <small data-test-id="feedback-message-small">{feedbackMessage}</small>}
           </form>
         )}
       </StyledWidget>
@@ -122,10 +122,10 @@ export const Widget = () => {
       <StyledMemberIDList>
         <div className='header'>
           <b>Member ID List</b>
-          <button onClick={() => setupSQLiteDatabaseTables()}>Init/Reset Database Tables</button>
+          <button onClick={() => setupSQLiteDatabaseTables()} data-test-id="setup-sqlite-database-tables">Init/Reset Database Tables</button>
         </div>
         <div>
-          <ul>
+          <ul data-test-id="member-id-list-ul">
             {memberIds.map(({ value, created_at }) => (
               <li key={value}>{value}</li>
             ))}
