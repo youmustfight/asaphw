@@ -5,7 +5,7 @@ from sanic import Blueprint
 import sqlalchemy as sa
 
 from dbs.redis_manager import redis_client
-from member_id.member_id_model import MemberID
+from member_id.member_id_models import MemberID
 from member_id.member_id_utils import is_member_id_valid, member_id_clean, member_id_generate
 from utils.to_date import to_date
 
