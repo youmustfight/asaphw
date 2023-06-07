@@ -35,11 +35,10 @@ services:
       - /usr/src/www/node_modules
     ports:
       - "7000:7000"
+    depends_on:
+      - api
     command: "npm run start:local"
     env_file:
       - ./.env
     environment:
-      # HACK: find a way to autopull vars in setup
       - TARGET_ENV=asap/local
-      - VITE_TARGET_ENV=asap/local
-      - VITE_SERVICE_API_URL=http://localhost:3000

@@ -1,3 +1,5 @@
+// Duplicative, could maybe fetch from the backend
+
 export const countryCodes = {
   "AF": "Afghanistan",
   "AL": "Albania",
