@@ -1,18 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
-import { Gideon } from "./Gideon";
-import { ResetCSS } from "./components/ResetCSS";
-import { GlobalCSS } from "./components/GlobalCSS";
+import styled from "styled-components";
+import { Widget } from "./Widget";
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <ResetCSS />
-      <GlobalCSS />
-      <Gideon />
-    </BrowserRouter>
+    <AppForm>
+      <Widget />
+    </AppForm>
   );
 };
+
+const AppForm = styled.div`
+  min-height: 100vh;
+  min-width: 100vw;
+  max-width: 100vw;
+  * {
+    font-family: 'Comic Sans', sans-serif;
+  }
+`;
 
 ReactDOM.render(<App />, document.querySelector("#root"));

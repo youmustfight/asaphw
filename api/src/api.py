@@ -143,7 +143,7 @@ Example Response: {
 async def app_route_member_id__validate_post(request):
     # VALIDATE/CLEAN
     if request.json.get('member_id') == None:
-        raise response.HTTPResponse(status=400, body="'member_id' is required")
+        raise ValueError("'member_id' is required")
     clean_member_id = member_id_clean(request.json.get('member_id'))
 
     # CACHE CHECK

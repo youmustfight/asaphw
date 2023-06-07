@@ -35,11 +35,11 @@ services:
       - /usr/src/www/node_modules
     ports:
       - "7000:7000"
-    command: "npm run start"
+    command: "npm run start:local"
     env_file:
       - ./.env
     environment:
       # HACK: find a way to autopull vars in setup
       - TARGET_ENV=asap/local
       - VITE_TARGET_ENV=asap/local
-      - VITE_GIDEON_API_URL=http://localhost:3000
+      - VITE_SERVICE_API_URL=http://localhost:3000
