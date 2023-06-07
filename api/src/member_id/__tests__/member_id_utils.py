@@ -23,10 +23,11 @@ def test_member_id_generate():
         member_id_generate(
             year=2023,
             country_code='MX',
-            birth_date=to_date('13/13/5001'), # <-- will cause err throw
+            birth_date=to_date('13/12/5001'), # <-- will cause err throw
         )
     except Exception as e:
-        assert "time data '13/13/5001' does not match format '%d/%m/%Y'" in str(e), 'Error not thrown for bad data'
+        print(e)
+        assert "Birth year cannot be in the future" in str(e), 'Error not thrown for bad data'
 
 
 def test_is_member_id_valid():
