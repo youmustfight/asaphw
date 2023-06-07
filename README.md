@@ -1,7 +1,5 @@
 # Member ID Demo
 
-![]('./docs/demo.png)
-
 ### About
 
 Separately dockerized frontend, api, and cache to demonstrate generating and validating membership ids. Tasked with making this in 24-48 hours, having a local dev setup, and running in prod.
@@ -13,3 +11,5 @@ Backend (directory: api) is an API using async Python with the Sanic framework. 
 ### Setup
 
 Easy to get started. Just 1) `docker-compose up` and then 2) when in the interface, hit the "Init/Reset Database Tables" button to create the `member_id` table in the SQLite in-memory database.
+
+![](./docs/demo.png)
