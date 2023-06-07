@@ -14,7 +14,7 @@ services:
     env_file:
       - ./.env
     environment:
-      - TARGET_ENV=asap/local
+      - TARGET_ENV=asap/local # determines which secrets we'll fetch/set at runtime
 
   cache:
     image: redis:6.2.7
@@ -41,4 +41,4 @@ services:
     env_file:
       - ./.env
     environment:
-      - TARGET_ENV=asap/local
+      - TARGET_ENV=asap/local # determines which secrets we'll fetch/set at runtime

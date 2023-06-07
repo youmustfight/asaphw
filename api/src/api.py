@@ -187,5 +187,5 @@ def start_api():
         host=host,
         port=port,
         auto_reload=env.env_is_local(),
-        workers=4)
+        workers=2)
  
