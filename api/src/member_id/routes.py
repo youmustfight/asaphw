@@ -4,7 +4,7 @@ from sanic.response import json
 from sanic import Blueprint
 import sqlalchemy as sa
 
-from dbs.database_redis import redis_client, r_key
+from dbs.database_redis import Cacher
 from member_id.member_id_models import MemberID
 from member_id.member_id_utils import is_member_id_valid, member_id_clean, member_id_generate
 from utils.to_date import to_date
@@ -100,7 +100,7 @@ async def app_route_member_id__validate_post(request):
     clean_member_id = member_id_clean(request.json.get('member_id'))
 
     # CACHE CHECK
-    cache_data = redis_client.get(r_key(['app_route_member_id__validate_post',clean_member_id]))
+    cache_data = Cacher().get(['app_route_member_id__validate_post', clean_member_id])
     if cache_data != None:
         print('cache hit!')
         return json({
@@ -124,7 +124,7 @@ async def app_route_member_id__validate_post(request):
             'invalid_reason': invalid_reason, # None/str
         }
         # --- update cache (cast to string for serialization, set 30 sec expiration)
-        redis_client.set(r_key(['app_route_member_id__validate_post', clean_member_id]), json_lib.dumps(response_data), ex=30)
+        Cacher().set(['app_route_member_id__validate_post', clean_member_id], json_lib.dumps(response_data), ex=30)
         # --- respond
         return json({
             'status': 'success',
