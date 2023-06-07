@@ -5,6 +5,10 @@ import { getServiceApiUrl } from '../env';
 export type TMemberID = { value: string, created_at: string }
 
 // REQUESTS
+// --- Database
+export const setupSQLiteDatabaseTables = () => axios.post('http://localhost:3000/database/init')
+
+// --- Members
 export const generateMemberId = ({
   firstName,
   lastName,
@@ -31,3 +35,4 @@ export const validateMemberId = (memberId: string) => axios
 export const fetchMemberIds = (): Promise<TMemberID[]> => axios
   .get(`${getServiceApiUrl()}/v1/member_ids`)
   .then(res => res.data.data.member_ids)
+

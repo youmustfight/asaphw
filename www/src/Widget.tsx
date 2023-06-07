@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { countryCodes } from './data/countryCodes';
-import { TMemberID, fetchMemberIds, generateMemberId, validateMemberId } from './data/requests';
+import { TMemberID, fetchMemberIds, generateMemberId, setupSQLiteDatabaseTables, validateMemberId } from './data/requests';
 
 enum WidgetMode {
   GENERATE = 'generate',
@@ -122,7 +122,7 @@ export const Widget = () => {
       <StyledMemberIDList>
         <div className='header'>
           <b>Member ID List</b>
-          <button onClick={() => axios.post('http://localhost:3000/database/init')}>Init/Reset Database Tables</button>
+          <button onClick={() => setupSQLiteDatabaseTables()}>Init/Reset Database Tables</button>
         </div>
         <div>
           <ul>
