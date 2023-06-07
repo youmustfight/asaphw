@@ -55,7 +55,7 @@ export const Widget = () => {
     fetchMemberIds().then((memberIds) => setMemberIds(memberIds))
   }, [])
   
-  // RENDER
+  // RENDER (TODO: break these out into components prob)
   return (
     <>
       <StyledWidget>
@@ -69,6 +69,7 @@ export const Widget = () => {
         {mode === WidgetMode.GENERATE && (
           <form onSubmit={(e) => {
             e.preventDefault();
+            // @ts-expect-error
             submitNewId(e.target.firstName.value, e.target.lastName.value, e.target.dob.value, e.target.country.value)
           }}>
             <div className="inputs">
@@ -102,6 +103,7 @@ export const Widget = () => {
         {mode === WidgetMode.VALIDATE && (
           <form onSubmit={(e) => {
             e.preventDefault();
+            // @ts-expect-error
             sumbitValidation(e.target.memberId.value);
           }}>
             <div className="inputs">

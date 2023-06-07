@@ -19,7 +19,7 @@ app = Sanic('api')
 
 
 # MIDDLEWARE
-# --- cors
+# --- cors (TODO: make it restrictive to domains of frontend services)
 CORS(app)
 # --- db driver + session context (https://docs.sqlalchemy.org/en/14/orm/session_api.html#sqlalchemy.orm.Session.params.autocommit)
 _base_model_session_ctx = ContextVar('session')
@@ -48,8 +48,8 @@ app.error_handler = CustomErrorHandler()
 # ROUTES
 # --- SETUP (HACK: felt like set/list/dict was too easy, so decided to do w/ ORM example)
 """
-Endpoint: /setup
-Description: Sets up the in memory db
+Endpoint: /database/init
+Description: Sets up the SQLite in memory db
 Method: GET
 Example Response: { "status": "success" }
 """
