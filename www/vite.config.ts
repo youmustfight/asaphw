@@ -21,6 +21,7 @@ export default defineConfig(async () => {
       resolve();
     })
   );
+
   // --- Config
   return {
     plugins: [react()],

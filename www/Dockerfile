@@ -1,20 +1,16 @@
-FROM node:16.14.2
+FROM node:18.6.0
 
 WORKDIR /usr/src/www
 
-# TODO: Install packages with yarn from npm registry (yarn needs .npmrc for auth)
+# Install packages
 COPY package.json yarn.lock ./
-ARG NPM_CONFIG_REGISTRY
-ARG NPM_TOKEN
-RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc \
-  && echo "\"registry\" \"${NPM_CONFIG_REGISTRY}\"" > .yarnrc \
-  && yarn install
+RUN yarn install
 
 # Copy files
 COPY . .
 
-# Secrets
-# TODO: move to runtime from layers
+# Env
+# --- Secrets
 ARG AWS_REGION
 ENV AWS_REGION=$AWS_REGION
 ARG AWS_ACCESS_KEY_ID
