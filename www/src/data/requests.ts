@@ -6,7 +6,7 @@ export type TMemberID = { value: string, created_at: string }
 
 // REQUESTS
 // --- Database
-export const setupSQLiteDatabaseTables = () => axios.post('http://localhost:3000/database/init')
+export const setupSQLiteDatabaseTables = () => axios.post(`${getServiceApiUrl()}/database/init`)
 
 // --- Members
 export const generateMemberId = ({
