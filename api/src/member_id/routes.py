@@ -123,8 +123,8 @@ async def app_route_member_id__validate_post(request):
             'is_valid': is_valid, # True/False
             'invalid_reason': invalid_reason, # None/str
         }
-        # --- update cache (cast to string for serialization, set 10 sec expiration)
-        redis_client.set(clean_member_id, json_lib.dumps(response_data), ex=10)
+        # --- update cache (cast to string for serialization, set 30 sec expiration)
+        redis_client.set(clean_member_id, json_lib.dumps(response_data), ex=30)
         # --- respond
         return json({
             'status': 'success',
