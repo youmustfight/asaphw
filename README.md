@@ -31,3 +31,5 @@ For frontend tests, we'll be utilizing chromium browser from outside our contain
 ---
 
 ![](./docs/demo.png)
+
+![](./docs/e2e-video.mp4)
