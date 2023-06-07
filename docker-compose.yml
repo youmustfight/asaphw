@@ -35,6 +35,7 @@ services:
       - /usr/src/www/node_modules
     ports:
       - "7000:7000"
+      - "80:7000" # could just do 80 but I like the extra port in case there's a conflcit
     depends_on:
       - api
     command: "npm run start:local"
