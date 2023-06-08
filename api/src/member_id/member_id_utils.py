@@ -1,7 +1,9 @@
 from datetime import date
 import re
 import uuid
+
 from geo.country_codes import country_codes_and_names
+from utils.validators import is_valid_country_code
 
 
 def member_id_clean(member_id: str) -> str:
@@ -29,8 +31,10 @@ def member_id_generate(year: int, country_code: str, birth_date: date) -> str:
     if year > date.today().year:
         raise ValueError('Year cannot be in the future')
     # --- country
-    if country_code not in country_codes_and_names.keys():
+    if is_valid_country_code(country_code, raise_if_fail=False) == False:
         raise ValueError('Not a valid country code')
+    if country_code == 'US':
+        raise ValueError(f'Disallowed US country code')
     # --- birth_date
     if birth_date.year > date.today().year:
         raise ValueError('Birth year cannot be in the future')
