@@ -6,13 +6,13 @@ Separately dockerized frontend, api, and cache to demonstrate generating and val
 
 Frontend (directory: www) is a Vite typescript bundled single page application, with a simple widget using React + Styled Components. Gives feedback on generation/validation submissions.
 
-Backend (directory: api) is an API using async Python with the Sanic framework. Instead of tracking member ids in a list/set, it initializes SQLite which is an in-memory SQL database. In the docker-compose/cluster config, you'll also find a redis instance which is being used to cache validation queries (expiration 10s).
+Backend (directory: api) is an API using async Python with the Sanic framework. Instead of tracking member ids in a list/set, I setup a Postgres SQL database wit hthe cluster (at first, I used SQLite in-memory but didn't want it to clear in production). In the docker-compose/cluster config, you'll also find a redis instance which is being used by an endpoint caching decorator on various routes.
 
 ### Setup
 
 This cluster setup utilizes the AWS Secrets Manager for pulling configs/vars that coordintaes services. For this demo, the basic credentials will placed in a `.env` file in the root of this directory. Ask Mark for this file.
 
-Once you have your credentials, startup is easy! Just 1) `docker-compose up` and then 2) when in the interface, hit the "Init/Reset Database Tables" button to create the `member_id` table in the SQLite in-memory database.
+Once you have your credentials, startup is easy! Just 1) `docker-compose up` and then 2) when in the interface, hit the "Init/Reset Database Tables" button to create the `member_id` and `user` tables in the SQL database. MemberIDs have a foreign key that relates back to users. Users hold all PII if ops needed to check credentials.
 
 ### Tests
 
