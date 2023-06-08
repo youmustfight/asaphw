@@ -109,7 +109,7 @@ export const Widget = () => {
             <div className="inputs">
               <label data-test-id="member-id-validation-input">
                 Member ID
-                <input type="text" name="memberId" onChange={clearMessages} />
+                <input type="text" name="memberId" placeholder="XX-XX-XX-XX-XXXX" onChange={clearMessages} />
               </label>
             </div>
             <button type="submit" data-test-id="member-id-validation-submit">Validate Member ID</button>
