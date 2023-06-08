@@ -4,6 +4,7 @@ from sanic.response import json
 from sanic import Blueprint
 import sqlalchemy as sa
 
+from api.middleware import endpoint_cache
 from dbs.database_redis import Cacher
 from member_id.member_id_models import MemberID
 from member_id.member_id_utils import is_member_id_valid, member_id_clean, member_id_generate
@@ -18,6 +19,7 @@ blueprint_member_id = Blueprint("blueprint_member_id")
 
 # ROUTES
 @blueprint_member_id.route('/v1/member_ids', methods = ['GET'])
+@endpoint_cache(expire=2)
 async def app_route_member_id_get(request):
     """
     Endpoint: /v1/member_ids
@@ -96,6 +98,7 @@ async def app_route_member_id_post(request):
         
 
 @blueprint_member_id.route('/v1/member_id/validate', methods = ['POST'])
+@endpoint_cache(expire=30, key_on='json')
 async def app_route_member_id__validate_post(request):
     """
     Endpoint: /v1/member_id/validate
@@ -117,15 +120,6 @@ async def app_route_member_id__validate_post(request):
     if is_valid_nonempty_str(request.json.get('member_id'), raise_if_fail=False) == False:
         raise ValueError("'member_id' is required")
     clean_member_id = member_id_clean(request.json.get('member_id'))
-
-    # CACHE CHECK
-    cache_data = Cacher().get(['app_route_member_id__validate_post', clean_member_id])
-    if cache_data != None:
-        print('cache hit!')
-        return json({
-            'status': 'success',
-            'data': json_lib.loads(cache_data)
-        })
     
     # EXECUTE
     session = request.ctx.session
@@ -142,8 +136,6 @@ async def app_route_member_id__validate_post(request):
             'is_valid': is_valid, # True/False
             'invalid_reason': invalid_reason, # None/str
         }
-        # --- update cache (cast to string for serialization, set 30 sec expiration)
-        Cacher().set(['app_route_member_id__validate_post', clean_member_id], json_lib.dumps(response_data), ex=30)
         # --- respond
         return json({
             'status': 'success',
