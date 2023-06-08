@@ -1,6 +1,11 @@
 FROM python:3.11.3-slim
 WORKDIR /usr/src/api
 
+# "wait-for-it.sh" copy + /bin
+# https://docs.docker.com/compose/startup-order/
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/wait-for-it.sh
+
 # Install python packages for app
 COPY requirements.txt .
 RUN pip install -r requirements.txt

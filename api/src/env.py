@@ -36,10 +36,23 @@ def _env_getter(secret_key):
 # ====================
 
 # DATABASE
-def env_get_database_app_url():
-    # In-memory sql database for SQLAlchemy. Can replace this with external databases + create other env getters.
-    # https://docs.sqlalchemy.org/en/20/core/engines.html#sqlite
-    return 'sqlite+aiosqlite://'
+def env_get_database_app_user_name():
+    return _env_getter('DATABASE_APP_USER_NAME')
+def env_get_database_app_user_password():
+    return _env_getter('DATABASE_APP_USER_PASSWORD')
+def env_get_database_app_name():
+    return _env_getter('DATABASE_APP_NAME')
+def env_get_database_app_host():
+    return _env_getter('DATABASE_APP_HOST')
+def env_get_database_app_port():
+    return _env_getter('DATABASE_APP_PORT')
+def env_get_database_app_url(driver="asyncpg"):
+    # # V1 - In-Memory SQLite
+    # # In-memory sql database for SQLAlchemy. Can replace this with external databases + create other env getters.
+    # # https://docs.sqlalchemy.org/en/20/core/engines.html#sqlite
+    # return 'sqlite+aiosqlite://'
+    # V2 - Postgres
+    return f"postgresql+{driver}://{env_get_database_app_user_name()}:{env_get_database_app_user_password()}@{env_get_database_app_host()}:{env_get_database_app_port()}/{env_get_database_app_name()}"
 
 # ENV
 def env_is_local() -> bool:

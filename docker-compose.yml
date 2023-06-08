@@ -10,16 +10,26 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - cache
+      - cache_api
+      - database_app
     env_file:
       - ./.env
     environment:
       - TARGET_ENV=asap/local # determines which secrets we'll fetch/set at runtime
 
-  cache:
+  cache_api:
     image: redis:6.2.7
     ports:
       - "6379:6379"
+
+  database_app:
+    image: postgres:14.5
+    environment:
+      POSTGRES_DB: asap
+      POSTGRES_USER: asapuser
+      POSTGRES_PASSWORD: asappassword
+    ports:
+      - "5432:5432"
 
   www:
     build:
@@ -27,10 +37,11 @@ services:
     volumes:
       - ./www/src:/usr/src/www/src
       - ./www/index.html:/usr/src/www/index.html
+      - ./www/jest.config.js:/usr/src/www/jest.config.js
       - ./www/package.json:/usr/src/www/package.json
       - ./www/tsconfig.json:/usr/src/www/tsconfig.json
       - ./www/tsconfig.node.json:/usr/src/www/tsconfig.node.json
-      - ./www/vite.config.json:/usr/src/www/vite.config.json
+      - ./www/vite.config.ts:/usr/src/www/vite.config.ts
       - ./www/yarn.lock:/usr/src/www/yarn.lock
       - /usr/src/www/node_modules
     ports:
