@@ -59,13 +59,13 @@ async def app_route_member_id_post(request):
     }
     """
     # VALIDATE
-    if is_valid_nonempty_str(request.json.get('first_name'), should_raise=False) == False:
+    if is_valid_nonempty_str(request.json.get('first_name'), raise_if_fail=False) == False:
         raise ValueError("'first_name' is required")
-    if is_valid_nonempty_str(request.json.get('last_name'), should_raise=False) == False:
+    if is_valid_nonempty_str(request.json.get('last_name'), raise_if_fail=False) == False:
         raise ValueError("'last_name' is required")
-    if is_valid_country_code(request.json.get('country'), should_raise=False) == False:
+    if is_valid_country_code(request.json.get('country'), raise_if_fail=False) == False:
         raise ValueError("'country' is required")
-    if is_valid_date(request.json.get('dob'), should_raise=False) == False:
+    if is_valid_date(request.json.get('dob'), raise_if_fail=False) == False:
         raise ValueError("'dob' is required (date of birth)")
 
     # EXECUTE
@@ -114,7 +114,7 @@ async def app_route_member_id__validate_post(request):
     }
     """
     # VALIDATE/CLEAN
-    if is_valid_nonempty_str(request.json.get('member_id'), should_raise=False) == False:
+    if is_valid_nonempty_str(request.json.get('member_id'), raise_if_fail=False) == False:
         raise ValueError("'member_id' is required")
     clean_member_id = member_id_clean(request.json.get('member_id'))
 
